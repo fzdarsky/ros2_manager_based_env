@@ -1,0 +1,58 @@
+# -----------------------------
+# Python cache / artifacts
+# -----------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Packaging / build
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# Testing / coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.mypy_cache/
+.pytype/
+
+# Logs / dumps
+logs/
+log/
+*.log
+nohup.out
+*.dmp
+*.crash
+core
+core.*
+
+# Temp / local state
+.tmp/
+tmp/
+.cache/
+*.swp
+*.swo
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+cmd

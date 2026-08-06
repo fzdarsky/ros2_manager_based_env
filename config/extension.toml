@@ -1,0 +1,16 @@
+[package]
+version = "0.1.0"
+category = "isaaclab"
+title = "ROS 2 Manager-Based Environments"
+description = "Installable collection of ROS 2-enabled manager-based Isaac Lab environments."
+authors = ["Project contributors"]
+repository = ""
+keywords = ["isaaclab", "robotics", "ros2", "manager-based"]
+
+[dependencies]
+"isaaclab" = {}
+"isaaclab_assets" = {}
+"isaaclab_tasks" = {}
+
+[[python.module]]
+name = "ros2_manager_based_env"

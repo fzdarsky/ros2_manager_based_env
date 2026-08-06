@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ros2_manager_based_env"
+version = "0.1.0"
+description = "ROS 2-enabled manager-based environments for Isaac Lab."
+readme = "README.md"
+requires-python = ">=3.10,<3.12"
+dependencies = []
+
+[project.scripts]
+ros2-manager-based-env-3-3 = "ros2_manager_based_env.custom_env_3_3.run_ros2_rollout:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ros2_manager_based_env*"]
+
+[tool.setuptools]
+include-package-data = true
