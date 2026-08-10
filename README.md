@@ -125,7 +125,7 @@ https://docs.isaacsim.omniverse.nvidia.com/latest/installation/install_container
 ### 1.1 Clone `ros2_manager_based_env`
 
 ```bash
-git clone git@github.com:execbat/ros2_manager_based_env.git
+git clone git@github.com:redhat-et/ros2_manager_based_env.git
 ```
 
 ### 1.2 Clone Isaac Lab into a different directory
