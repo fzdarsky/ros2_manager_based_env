@@ -37,8 +37,9 @@ class CustomLocomotionVelocityRoughEnvCfg(ManagerBasedRLEnvCfg):
         self.sim.dt = 1 / 100  # physics: 100 Hz
         self.sim.render_interval = 1 # render every physics step  # self.decimation  # rendering: 10 Hz
         self.sim.physx.bounce_threshold_velocity = 0.01
-        self.sim.physx.gpu_max_rigid_patch_count = 4 * 5 * 2**15    
+        self.sim.physx.gpu_max_rigid_patch_count = 4 * 5 * 2**15
         
 
         
+
 

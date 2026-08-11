@@ -26,14 +26,6 @@ class G1RoughEnv3_3Cfg(CustomLocomotionVelocityRoughEnvCfg):
             prim_path="{ENV_REGEX_NS}/Robot"
         )
 
-        # Isaac Lab 3.0.0-beta2-post1 resolves the Franka asset from the
-        # Legacy directory in the current Isaac Sim asset layout. This mirrors
-        # the workaround used by the working legacy robotics-playground scene.
-        robot_cfg.spawn.usd_path = robot_cfg.spawn.usd_path.replace(
-            "/Robots/FrankaEmika/panda_instanceable.usd",
-            "/Robots/FrankaEmika/Legacy/panda_instanceable.usd",
-        )
-
         robot_cfg.actuators["panda_shoulder"].stiffness = 0.0
         robot_cfg.actuators["panda_shoulder"].damping = 0.0
         robot_cfg.actuators["panda_forearm"].stiffness = 0.0
