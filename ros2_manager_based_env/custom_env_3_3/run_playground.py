@@ -43,6 +43,7 @@ def main() -> None:
                 "wrist_cam",
                 "table_cam",
             ],
+            env=env,
             state_topic="/vla/obs/state",
             action_topic="/vla/action",
             camera_topic_prefix="/vla/obs/",
