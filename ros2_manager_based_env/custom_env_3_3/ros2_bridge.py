@@ -48,7 +48,12 @@ import rclpy
 from rclpy.node import Node
 from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy
 from sensor_msgs.msg import Image
-from simulation_interfaces.srv import ResetSimulation, SetSimulationState, StepSimulation
+from simulation_interfaces.srv import (
+    GetSimulationState,
+    ResetSimulation,
+    SetSimulationState,
+    StepSimulation,
+)
 from std_msgs.msg import Float32MultiArray, MultiArrayDimension
 
 from .observations import eef_pose_axis_angle, gripper_pos
@@ -64,6 +69,7 @@ class Ros2VlaBridge:
     - /reset_simulation: Resets environment including action manager buffers
     - /set_simulation_state: Sets sim state (STOPPED/PLAYING/PAUSED)
     - /step_simulation: Steps simulation by N steps
+    - /get_simulation_state: Returns current sim state
     """
 
     def __init__(
@@ -123,6 +129,9 @@ class Ros2VlaBridge:
         )
         self._step_service = self._node.create_service(
             StepSimulation, "/step_simulation", self._handle_step_simulation
+        )
+        self._get_state_service = self._node.create_service(
+            GetSimulationState, "/get_simulation_state", self._handle_get_simulation_state
         )
 
         # Simulation state tracking
@@ -214,6 +223,19 @@ class Ros2VlaBridge:
             self._node.get_logger().error(f"StepSimulation failed: {e}")
             response.success = False
 
+        return response
+
+    def _handle_get_simulation_state(
+        self, request: GetSimulationState.Request, response: GetSimulationState.Response
+    ):
+        """Handle /get_simulation_state service: return current sim state."""
+        with self._sim_state_lock:
+            response.state = self._sim_state
+
+        state_names = {0: "STOPPED", 1: "PLAYING", 2: "PAUSED"}
+        self._node.get_logger().debug(
+            f"GetSimulationState returned: {state_names.get(response.state, response.state)}"
+        )
         return response
 
     @property
