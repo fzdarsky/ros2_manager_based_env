@@ -177,16 +177,16 @@ class Ros2VlaBridge:
         """Handle /set_simulation_state service: sets sim state (STOPPED/PLAYING/PAUSED)."""
         try:
             state_names = {0: "STOPPED", 1: "PLAYING", 2: "PAUSED", 3: "QUITTING"}
-            state_name = state_names.get(request.state, f"UNKNOWN({request.state})")
+            state_name = state_names.get(request.state.state, f"UNKNOWN({request.state.state})")
 
             self._node.get_logger().info(f"SetSimulationState service called: {state_name}")
 
             with self._sim_state_lock:
-                self._sim_state = request.state
-                self._paused = request.state in (0, 2)  # STOPPED or PAUSED
+                self._sim_state = request.state.state
+                self._paused = request.state.state in (0, 2)  # STOPPED or PAUSED
 
                 # STOPPED (0) = pause + reset
-                if request.state == 0:
+                if request.state.state == 0:
                     self._env.reset()
                     with self._action_lock:
                         self._current_chunk = torch.zeros(1, self._action_dim)
@@ -230,11 +230,11 @@ class Ros2VlaBridge:
     ):
         """Handle /get_simulation_state service: return current sim state."""
         with self._sim_state_lock:
-            response.state = self._sim_state
+            response.state.state = self._sim_state
 
         state_names = {0: "STOPPED", 1: "PLAYING", 2: "PAUSED"}
         self._node.get_logger().debug(
-            f"GetSimulationState returned: {state_names.get(response.state, response.state)}"
+            f"GetSimulationState returned: {state_names.get(response.state.state, response.state.state)}"
         )
         return response
 
