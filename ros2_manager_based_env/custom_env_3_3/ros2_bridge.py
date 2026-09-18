@@ -163,11 +163,11 @@ class Ros2VlaBridge:
                 self._chunk_step_index = 0
                 self._has_received_chunk = False
 
-            response.success = True
             self._node.get_logger().info("ResetSimulation completed successfully")
         except Exception as e:
             self._node.get_logger().error(f"ResetSimulation failed: {e}")
-            response.success = False
+            response.result.result = 1
+            response.result.error_message = str(e)
 
         return response
 
@@ -193,11 +193,11 @@ class Ros2VlaBridge:
                         self._chunk_step_index = 0
                         self._has_received_chunk = False
 
-            response.success = True
             self._node.get_logger().info(f"SetSimulationState to {state_name} completed")
         except Exception as e:
             self._node.get_logger().error(f"SetSimulationState failed: {e}")
-            response.success = False
+            response.result.result = 1
+            response.result.error_message = str(e)
 
         return response
 
@@ -217,11 +217,11 @@ class Ros2VlaBridge:
             # For manager-based envs, stepping is done by the rollout loop
             # This service acknowledges the request but doesn't directly step
             # (the rollout loop would need to check _paused and step accordingly)
-            response.success = True
             self._node.get_logger().info(f"StepSimulation acknowledged {steps} steps")
         except Exception as e:
             self._node.get_logger().error(f"StepSimulation failed: {e}")
-            response.success = False
+            response.result.result = 1
+            response.result.error_message = str(e)
 
         return response
 
