@@ -116,8 +116,13 @@ class Ros2VlaBridge:
         self._chunk_step_index = 0
         self._has_received_chunk = False
 
+        action_qos = QoSProfile(
+            reliability=ReliabilityPolicy.RELIABLE,
+            history=HistoryPolicy.KEEP_LAST,
+            depth=10,
+        )
         self._action_subscriber = self._node.create_subscription(
-            Float32MultiArray, action_topic, self._on_action_chunk_msg, qos
+            Float32MultiArray, action_topic, self._on_action_chunk_msg, action_qos
         )
 
         # Standard simulation_interfaces service servers
