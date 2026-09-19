@@ -163,7 +163,12 @@ class Ros2VlaBridge:
                 self._chunk_step_index = 0
                 self._has_received_chunk = False
 
-            self._node.get_logger().info("ResetSimulation completed successfully")
+            # Transition to STOPPED so a subsequent Play can re-trigger PLAYING
+            with self._sim_state_lock:
+                self._sim_state = 0  # STATE_STOPPED
+                self._paused = True
+
+            self._node.get_logger().info("ResetSimulation completed successfully (state → STOPPED)")
         except Exception as e:
             self._node.get_logger().error(f"ResetSimulation failed: {e}")
             response.result.result = 1
